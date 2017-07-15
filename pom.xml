@@ -25,6 +25,29 @@
 		    <artifactId>jsqlparser</artifactId>
 		    <version>0.8.0</version>
 		</dependency>
+
+
+		<!-- logger begin -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+			<optional>true</optional>
+		</dependency>
+		<!-- 添加mysql驱动包 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.34</version>
+			<optional>true</optional>
+		</dependency>
+		<!-- 添加druid连接池包 -->
+		<!--<dependency>-->
+			<!--<groupId>com.alibaba</groupId>-->
+			<!--<artifactId>druid</artifactId>-->
+			<!--<version>1.0.28</version>-->
+			<!--<scope>test</scope>-->
+		<!--</dependency>-->
 		<!-- 添加junit单元测试包 -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -34,17 +57,39 @@
 		</dependency>
 	</dependencies>
 
-	<plugins>
-		<!-- JDK版本控制 -->
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.1</version>
-			<configuration>
-				<source>1.8</source><!-- 源代码开发版本 -->
-				<target>1.8</target><!-- java编译版本 -->
-				<encoding>UTF8</encoding> <!-- 项目的编码 -->
-			</configuration>
-		</plugin>
-	</plugins>
+	<build>
+		<!-- 解决idea中非java文件在package下不放入test-classes的问题 -->
+		<testResources>
+			<testResource>
+				<directory>src/test/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.xsd</include>
+					<include>**/*.html</include>
+					<include>**/*.properties</include>
+				</includes>
+				<filtering>false</filtering>
+			</testResource>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<filtering>false</filtering>
+			</testResource>
+		</testResources>
+		<plugins>
+			<!-- JDK版本控制 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source><!-- 源代码开发版本 -->
+					<target>1.8</target><!-- java编译版本 -->
+					<encoding>UTF8</encoding> <!-- 项目的编码 -->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

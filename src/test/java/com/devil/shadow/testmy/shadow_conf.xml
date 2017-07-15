@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dbServers>
+    <dbServer name="db1" type="write">
+        <url>jdbc:mysql://localhost:3306/db1?useUnicode=true&amp;characterEncoding=UTF-8</url>
+        <username>root</username>
+        <password>root</password>
+    </dbServer>
+    <dbServer name="db2" type="read">
+        <url>jdbc:mysql://localhost:3306/db2?useUnicode=true&amp;characterEncoding=UTF-8</url>
+        <username>root</username>
+        <password>root</password>
+    </dbServer>
+</dbServers>
+
