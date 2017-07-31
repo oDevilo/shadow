@@ -17,4 +17,12 @@
         <password>root</password>
     </dbServer>
 </dbServers>
+<shadow>
+    <ShardGroup> <!-- 一个ShardGroup 代表了这些表，划分到哪些库 -->
+        <name></name>
+        <tables></tables>
+        <environment></environment>
+        <rule></rule>
+    </ShardGroup>
+</shadow>
 

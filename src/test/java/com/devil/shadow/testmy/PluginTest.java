@@ -79,6 +79,7 @@ public class PluginTest {
         List<Environment> list = new ArrayList<>();
         for (XNode xNode : environments.getChildren()) {
             String id = xNode.getStringAttribute("id"); // 只要获取所有的id就能加载了
+            System.out.println(id);
             list.add(builder.test(xNode));
         }
         System.out.println(root);

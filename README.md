@@ -13,4 +13,7 @@ shadowconfig配置文件如下
 那么必须要保证之前的数据路由是到之前的数据库
 
 
+db的配置还是在mybatis-config
+获取db的id来进行router分配
+
 分表
