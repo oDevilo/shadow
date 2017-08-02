@@ -1,28 +1,19 @@
 package org.devil.shadow.support;
 
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
-import org.devil.shadow.config.ShadowConfigHolder;
+import org.devil.shadow.config.TabelStrategyConfigHolder;
 import org.xml.sax.*;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by devil on 2017/7/14.
  */
 public class ShadowConfigParser {
-    private static final Log log = LogFactory.getLog(ShadowConfigParser.class);
-    private static final Map<String, String> DOC_TYPE_MAP = new HashMap();
-    private static final SaxParseHandler handler = new SaxParseHandler();
+    private static final TableStrategyParseHandler handler = new TableStrategyParseHandler();
 
-    public ShadowConfigHolder parse(InputStream input) throws Exception {
-        final ShadowConfigHolder configHolder = ShadowConfigHolder.getInstance();
+    public void parse(InputStream input) throws Exception {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setValidating(true);
         spf.setNamespaceAware(true);
@@ -32,21 +23,6 @@ public class ShadowConfigParser {
         reader.setEntityResolver(handler);
         reader.setErrorHandler(handler);
         reader.parse(new InputSource(input));
-        return configHolder;
     }
 
-    private InputSource getInputSource(String path, InputSource source) {
-        if(path != null) {
-            InputStream in = null;
-
-            try {
-                in = Resources.getResourceAsStream(path);
-                source = new InputSource(in);
-            } catch (IOException var5) {
-                log.warn(var5.getMessage());
-            }
-        }
-
-        return source;
-    }
 }

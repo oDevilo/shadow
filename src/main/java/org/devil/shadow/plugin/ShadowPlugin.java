@@ -8,6 +8,7 @@ import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.*;
+import org.devil.shadow.constants.TagConstants;
 import org.devil.shadow.converter.SqlConverterFactory;
 import org.devil.shadow.support.ShadowConfigParser;
 import org.devil.shadow.util.ReflectionUtils;
@@ -28,7 +29,6 @@ import java.util.Properties;
 @Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class})})
 public class ShadowPlugin implements Interceptor {
     private static final Log log = LogFactory.getLog(ShadowPlugin.class);
-    public static final String TABLE_ROUTER = "tableRouter";
     /**
      * 实现拦截逻辑的地方，内部要通过invocation.proceed()显式地推进责任链前进，也就是调用下一个拦截器拦截目标方法。
      *
@@ -80,7 +80,7 @@ public class ShadowPlugin implements Interceptor {
      */
     @Override
     public void setProperties(Properties properties) {
-        String config = properties.getProperty(TABLE_ROUTER);
+        String config = properties.getProperty(TagConstants.TABLE_STRATEGY);
         if(null != config && config.trim().length() > 0) {
             InputStream input = null;
             try {
@@ -88,10 +88,10 @@ public class ShadowPlugin implements Interceptor {
                 ShadowConfigParser parser = new ShadowConfigParser();
                 parser.parse(input);
             } catch (IOException e1) {
-                log.error("Get table router file failed.", e1);
+                log.error("Get table strategy file failed.", e1);
                 throw new IllegalArgumentException(e1);
             } catch (Exception e5) {
-                log.error("Parse table router file failed.", e5);
+                log.error("Parse table strategy file failed.", e5);
                 throw new IllegalArgumentException(e5);
             } finally {
                 if(input != null) {
@@ -105,7 +105,7 @@ public class ShadowPlugin implements Interceptor {
             }
 
         } else {
-            throw new IllegalArgumentException("property 'tableRouter' is not found.");
+            throw new IllegalArgumentException("property 'tableStrategy' is not found.");
         }
     }
 }

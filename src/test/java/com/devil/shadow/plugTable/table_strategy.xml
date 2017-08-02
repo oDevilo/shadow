@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE shadow PUBLIC "-//shadow.devil.com//DTD shadow 2.0//EN"
+        "http://shadow.devil.com/dtd/tableStrategy-config.dtd">
 <shadow>
     <strategy name="test1" strategyClass="com.devil.shadow.plugTable.TestStra">
         <tables>test</tables>
@@ -7,4 +9,3 @@
         <tables>test2</tables>
     </strategy>
 </shadow>
-

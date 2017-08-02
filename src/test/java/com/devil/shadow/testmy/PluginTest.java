@@ -1,8 +1,6 @@
 package com.devil.shadow.testmy;
 
 import com.devil.shadow.model.TestModel;
-import com.devil.shadow.test2.TestDo;
-import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.builder.xml.XMLMapperEntityResolver;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.parsing.XNode;
@@ -34,7 +32,7 @@ public class PluginTest {
     @Test
     public void test1() {
         //使用类加载器加载mybatis的配置文件（它也加载关联的映射文件）
-        InputStream is = TestDo.class.getClassLoader().getResourceAsStream(resource);
+        InputStream is = PluginTest.class.getClassLoader().getResourceAsStream(resource);
         if (null == is) {
             throw new RuntimeException("加载配置文件失败");
         }
@@ -68,7 +66,7 @@ public class PluginTest {
     @Test
     public void testXml() throws Exception {
         //使用类加载器加载mybatis的配置文件（它也加载关联的映射文件）
-        InputStream is = TestDo.class.getClassLoader().getResourceAsStream(resource);
+        InputStream is = PluginTest.class.getClassLoader().getResourceAsStream(resource);
         if (null == is) {
             throw new RuntimeException("加载配置文件失败");
         }
@@ -88,7 +86,7 @@ public class PluginTest {
     @Test
     public void testConf() {
         //使用类加载器加载mybatis的配置文件（它也加载关联的映射文件）
-        InputStream is = TestDo.class.getClassLoader().getResourceAsStream(resource);
+        InputStream is = PluginTest.class.getClassLoader().getResourceAsStream(resource);
         if (null == is) {
             throw new RuntimeException("加载配置文件失败");
         }

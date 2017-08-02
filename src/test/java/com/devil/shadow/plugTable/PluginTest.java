@@ -1,23 +1,13 @@
 package com.devil.shadow.plugTable;
 
 import com.devil.shadow.model.TestModel;
-import com.devil.shadow.test2.TestDo;
-import com.devil.shadow.testmy.EnvironmentBuilder;
-import org.apache.ibatis.builder.xml.XMLConfigBuilder;
-import org.apache.ibatis.builder.xml.XMLMapperEntityResolver;
-import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.parsing.XNode;
-import org.apache.ibatis.parsing.XPathParser;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.devil.shadow.config.ShadowConfigHolder;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +21,7 @@ public class PluginTest {
     @Test
     public void test1() {
         //使用类加载器加载mybatis的配置文件（它也加载关联的映射文件）
-        InputStream is = TestDo.class.getClassLoader().getResourceAsStream(resource);
+        InputStream is = PluginTest.class.getClassLoader().getResourceAsStream(resource);
         if (null == is) {
             throw new RuntimeException("加载配置文件失败");
         }
@@ -55,7 +45,7 @@ public class PluginTest {
         // map 方式
         Map<String, Object> map = new HashMap<>();
         map.put("id", 101L);
-        map.put("name", "this is ");
+        map.put("NAME", "this is ");
         // obj 方式
 //        TestModel map = new TestModel();
 //        map.setId(1L);

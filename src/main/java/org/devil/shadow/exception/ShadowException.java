@@ -1,6 +1,6 @@
 package org.devil.shadow.exception;
 
-public class ShadowException extends Exception {
+public class ShadowException extends RuntimeException {
 
     public ShadowException() {
     }

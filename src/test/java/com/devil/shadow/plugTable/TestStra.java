@@ -2,7 +2,6 @@ package com.devil.shadow.plugTable;
 
 import com.devil.shadow.model.TestModel;
 import org.devil.shadow.strategy.TableStrategy;
-import org.junit.Test;
 
 import java.util.HashMap;
 

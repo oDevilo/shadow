@@ -36,7 +36,7 @@ public class TestModel {
     public String toString() {
         return "TestModel{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", NAME='" + name + '\'' +
                 ", value='" + value + '\'' +
                 '}';
     }
