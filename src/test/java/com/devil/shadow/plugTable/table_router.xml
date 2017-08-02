@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shadow>
+    <strategy name="test1" strategyClass="com.devil.shadow.plugTable.TestStra">
+        <tables>test</tables>
+    </strategy>
+    <strategy name="test2" strategyClass="com.devil.shadow.plugTable.TestStra">
+        <tables>test2</tables>
+    </strategy>
+</shadow>
+

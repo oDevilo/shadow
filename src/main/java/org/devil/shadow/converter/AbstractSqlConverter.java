@@ -1,10 +1,9 @@
 package org.devil.shadow.converter;
 
-import org.devil.shadow.builder.ShardConfigHolder;
-import org.devil.shadow.strategy.ShardStrategy;
-
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.util.deparser.StatementDeParser;
+import org.devil.shadow.config.ShadowConfigHolder;
+import org.devil.shadow.strategy.TableStrategy;
 
 public abstract class AbstractSqlConverter implements SqlConverter {
     public AbstractSqlConverter() {
@@ -21,9 +20,8 @@ public abstract class AbstractSqlConverter implements SqlConverter {
     }
 
     protected String convertTableName(String tableName, Object params, String mapperId) {
-        ShardConfigHolder configFactory = ShardConfigHolder.getInstance();
-        ShardStrategy strategy = configFactory.getStrategy(tableName);
-        return strategy == null?tableName:strategy.getTargetTableName(tableName, params, mapperId);
+        TableStrategy strategy = ShadowConfigHolder.getTableStrategy(tableName);
+        return strategy == null ? tableName : strategy.convertTable(tableName, params, mapperId);
     }
 
     protected abstract Statement doConvert(Statement var1, Object var2, String var3);

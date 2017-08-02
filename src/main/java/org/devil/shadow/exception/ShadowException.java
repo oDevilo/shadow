@@ -1,7 +1,6 @@
 package org.devil.shadow.exception;
 
 public class ShadowException extends Exception {
-    private static final long serialVersionUID = 1793760050084714190L;
 
     public ShadowException() {
     }

@@ -1,21 +1,35 @@
-package com.devil.shadow.test2;
+package com.devil.shadow.plugTable;
 
+import com.devil.shadow.model.TestModel;
+import com.devil.shadow.test2.TestDo;
+import com.devil.shadow.testmy.EnvironmentBuilder;
+import org.apache.ibatis.builder.xml.XMLConfigBuilder;
+import org.apache.ibatis.builder.xml.XMLMapperEntityResolver;
+import org.apache.ibatis.mapping.Environment;
+import org.apache.ibatis.parsing.XNode;
+import org.apache.ibatis.parsing.XPathParser;
+import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.devil.shadow.config.ShadowConfigHolder;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Created by devil on 2017/7/13.
+ * Created by devil on 2017/6/13.
  */
-public class TestDo {
+public class PluginTest {
+    String resource = "com/devil/shadow/plugTable/mybatis-config.xml";
 
     @Test
     public void test1() {
-        //mybatis的配置文件
-        String resource = "com/devil/shadow/test2/mybatis-config.xml";
         //使用类加载器加载mybatis的配置文件（它也加载关联的映射文件）
         InputStream is = TestDo.class.getClassLoader().getResourceAsStream(resource);
         if (null == is) {
@@ -28,15 +42,28 @@ public class TestDo {
         //构建sqlSession的工厂
         //SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader);
         //创建能执行映射文件中sql的sqlSession
+        Configuration configuration = sessionFactory.getConfiguration();
+        System.out.println(configuration);
         SqlSession session = sessionFactory.openSession();
         /**
          * 映射sql的标识字符串，
          * me.gacl.mapping.userMapper是userMapper.xml文件中mapper标签的namespace属性的值，
          * getUser是select标签的id属性值，通过select标签的id属性值就可以找到要执行的SQL
          */
-        String statement = "com.devil.shadow.test2.Student.selectByPrimaryKey";//映射sql的标识字符串
+        String statement = "com.devil.shadow.model.TestModel.selectByPrimaryKey";//映射sql的标识字符串
         //执行查询返回一个唯一user对象的sql
-        Student user = session.selectOne(statement, 1);
+        // map 方式
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", 101L);
+        map.put("name", "this is ");
+        // obj 方式
+//        TestModel map = new TestModel();
+//        map.setId(1L);
+//        map.setName("this is ");
+        List<TestModel> user = session.selectList(statement, map);
         System.out.println(user);
+
     }
+
+
 }

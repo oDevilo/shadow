@@ -17,6 +17,9 @@
       <if test="id != null">
         AND id = #{id,jdbcType=INTEGER}
       </if>
+      <if test="name != null">
+        AND name = #{name}
+      </if>
     </where>
   </select>
 </mapper>

@@ -7,7 +7,7 @@
     </settings>
     <plugins>
         <plugin interceptor="org.devil.shadow.plugin.ShadowPlugin">
-            <property name="tableRouter" value="com/devil/shadow/testmy/table_router.xml" />
+            <property name="tableRouter" value="com/devil/shadow/plugTable/table_router.xml" />
         </plugin>
     </plugins>
     <environments default="development1">
@@ -18,15 +18,6 @@
                 <property name="url" value="${jdbc.url.db1}"/>
                 <property name="username" value="${jdbc.username.db1}"/>
                 <property name="password" value="${jdbc.password.db1}"/>
-            </dataSource>
-        </environment>
-        <environment id="development2">
-            <transactionManager type="JDBC"></transactionManager>
-            <dataSource type="POOLED">
-                <property name="driver" value="${jdbc.driver}"/>
-                <property name="url" value="${jdbc.url.db2}"/>
-                <property name="username" value="${jdbc.username.db2}"/>
-                <property name="password" value="${jdbc.password.db2}"/>
             </dataSource>
         </environment>
     </environments>

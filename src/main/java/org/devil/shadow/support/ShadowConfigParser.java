@@ -1,11 +1,10 @@
-package org.devil.myshadow;
+package org.devil.shadow.support;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
-import org.devil.shadow.strategy.ShardStrategy;
+import org.devil.shadow.config.ShadowConfigHolder;
 import org.xml.sax.*;
-import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;

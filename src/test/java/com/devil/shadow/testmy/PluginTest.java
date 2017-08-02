@@ -38,10 +38,10 @@ public class PluginTest {
         if (null == is) {
             throw new RuntimeException("加载配置文件失败");
         }
-        XMLConfigBuilder xf = new XMLConfigBuilder(is);
-        System.out.println(xf);
-        Configuration conf = xf.parse();
-        System.out.println(conf);
+//        XMLConfigBuilder xf = new XMLConfigBuilder(is);
+//        System.out.println(xf);
+//        Configuration conf = xf.parse();
+//        System.out.println(conf);
         //构建sqlSession的工厂
         SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(is);
         //使用MyBatis提供的Resources类加载mybatis的配置文件（它也加载关联的映射文件）
@@ -96,5 +96,6 @@ public class PluginTest {
         SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(is);
         System.out.println(sessionFactory);
     }
+
 
 }
