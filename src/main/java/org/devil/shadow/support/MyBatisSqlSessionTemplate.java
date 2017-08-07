@@ -18,6 +18,7 @@ import java.util.Set;
  * Created by devil on 2017/8/7.
  */
 public class MyBatisSqlSessionTemplate implements InitializingBean, SqlSession {
+
     protected Map<String, SqlSessionTemplate> current_thread__sqlMap_client_templates = new HashMap<String, SqlSessionTemplate>();
     private Set<Shard> shards;
 
