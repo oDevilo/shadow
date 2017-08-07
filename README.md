@@ -22,7 +22,7 @@ table_router.xml
         "http://shardow.devil.com/dtd/tableRouter-config.dtd">
 <shadow>
     <strategy name="test1" strategyClass="com.devil.shadow.plugTable.TestStra">
-        <tables>test</tables>
+        <tables>test,user</tables>
     </strategy>
     <strategy name="test2" strategyClass="com.devil.shadow.plugTable.TestStra">
         <tables>test2</tables>
@@ -39,7 +39,9 @@ public class TestStra implements TableStrategy {
         Long id;
         if (param instanceof TestModel) {
             id = ((TestModel) param).getId();
-        } else if (param instanceof HashMap){
+        } else if (param instanceof UserModel) {
+            id = ((UserModel) param).getId();
+        } else if (param instanceof HashMap) {
             id = (Long) ((HashMap) param).get("id");
         } else {
             throw new RuntimeException("类型不正确");

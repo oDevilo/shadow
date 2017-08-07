@@ -1,6 +1,7 @@
 package com.devil.shadow.plugTable;
 
 import com.devil.shadow.model.TestModel;
+import com.devil.shadow.model.UserModel;
 import org.devil.shadow.strategy.TableStrategy;
 
 import java.util.HashMap;
@@ -14,7 +15,9 @@ public class TestStra implements TableStrategy {
         Long id;
         if (param instanceof TestModel) {
             id = ((TestModel) param).getId();
-        } else if (param instanceof HashMap){
+        } else if (param instanceof UserModel) {
+            id = ((UserModel) param).getId();
+        } else if (param instanceof HashMap) {
             id = (Long) ((HashMap) param).get("id");
         } else {
             throw new RuntimeException("类型不正确");

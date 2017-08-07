@@ -3,7 +3,7 @@
         "http://shadow.devil.com/dtd/tableStrategy-config.dtd">
 <shadow>
     <strategy name="test1" strategyClass="com.devil.shadow.plugTable.TestStra">
-        <tables>test</tables>
+        <tables>test,user</tables>
     </strategy>
     <strategy name="test2" strategyClass="com.devil.shadow.plugTable.TestStra">
         <tables>test2</tables>

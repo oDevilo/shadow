@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ELEMENT shadow (strategy*)>
+<!ELEMENT strategy (tables+)>
+<!ELEMENT tables (#PCDATA)>
+<!ATTLIST strategy
+name CDATA #REQUIRED
+strategyClass CDATA #REQUIRED
+>

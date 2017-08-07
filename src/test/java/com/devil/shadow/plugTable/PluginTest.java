@@ -1,6 +1,7 @@
 package com.devil.shadow.plugTable;
 
 import com.devil.shadow.model.TestModel;
+import com.devil.shadow.model.UserModel;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -40,18 +41,20 @@ public class PluginTest {
          * me.gacl.mapping.userMapper是userMapper.xml文件中mapper标签的namespace属性的值，
          * getUser是select标签的id属性值，通过select标签的id属性值就可以找到要执行的SQL
          */
-        String statement = "com.devil.shadow.model.TestModel.selectByPrimaryKey";//映射sql的标识字符串
         //执行查询返回一个唯一user对象的sql
         // map 方式
         Map<String, Object> map = new HashMap<>();
         map.put("id", 101L);
         map.put("NAME", "this is ");
+        List<TestModel> test = session.selectList("com.devil.shadow.model.TestMapper.selectByPrimaryKey", map);
+        System.out.println(test);
         // obj 方式
-//        TestModel map = new TestModel();
-//        map.setId(1L);
-//        map.setName("this is ");
-        List<TestModel> user = session.selectList(statement, map);
-        System.out.println(user);
+        UserModel user = new UserModel();
+        user.setId(1L);
+        user.setName("this is ");
+        List<UserModel> u = session.selectList("com.devil.shadow.model.UserMapper.selectByPrimaryKey", user);
+        System.out.println(u);
+
 
     }
 
