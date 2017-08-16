@@ -1,11 +1,15 @@
 package com.devil.shadow.testshard;
 
+import com.devil.shadow.ApplicationUtil;
 import com.devil.shadow.model.TestMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.sql.DataSource;
+import java.util.Map;
 
 /**
  * Created by devil on 2017/6/13.
@@ -18,6 +22,10 @@ public class ShardTest {
 
     @Test
     public void testShard(){
-        testMapper.selectByPrimaryKey(1L);
+        System.out.println(testMapper.selectByPrimaryKey(1L));
+        Map<String, DataSource> bean = (Map<String, DataSource>) ApplicationUtil.getBean("shardSqlSessionFactory");
+        System.out.println(bean);
     }
+
+
 }

@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.InitializingBean;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +20,8 @@ import java.util.Set;
  */
 public class MyBatisSqlSessionTemplate implements InitializingBean, SqlSession {
 
-    protected Map<String, SqlSessionTemplate> current_thread__sqlMap_client_templates = new HashMap<String, SqlSessionTemplate>();
-    private Set<Shard> shards;
+    protected Map<String, SqlSessionTemplate> sqlSessionTemplates = new HashMap<String, SqlSessionTemplate>();
+    private Map<String, DataSource> shards;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -162,11 +163,12 @@ public class MyBatisSqlSessionTemplate implements InitializingBean, SqlSession {
         return null;
     }
 
-    public Set<Shard> getShards() {
+
+    public Map<String, DataSource> getShards() {
         return shards;
     }
 
-    public void setShards(Set<Shard> shards) {
+    public void setShards(Map<String, DataSource> shards) {
         this.shards = shards;
     }
 }

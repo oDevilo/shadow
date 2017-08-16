@@ -1,7 +1,7 @@
 package org.devil.shadow.config;
 
 import org.devil.shadow.exception.ShadowException;
-import org.devil.shadow.strategy.TableStrategy;
+import org.devil.shadow.strategy.RouterStrategy;
 
 import java.util.*;
 
@@ -9,11 +9,11 @@ import java.util.*;
  * Created by devil on 2017/8/2.
  */
 public class TabelStrategyConfigHolder {
-    private static Map<String, TableStrategy> strategyRegister = new HashMap<String, TableStrategy>();
+    private static Map<String, RouterStrategy> strategyRegister = new HashMap<String, RouterStrategy>();
     private static Map<String, List<String>> strategyTables = new HashMap<String, List<String>>();
-    private static Map<String, TableStrategy> tableStrategyRouter = new HashMap<String, TableStrategy>();
+    private static Map<String, RouterStrategy> tableStrategyRouter = new HashMap<String, RouterStrategy>();
 
-    public static void register(String name, TableStrategy strategy) {
+    public static void register(String name, RouterStrategy strategy) {
         strategyRegister.put(name, strategy);
     }
 
@@ -51,7 +51,7 @@ public class TabelStrategyConfigHolder {
         }
     }
 
-    public static Map<String, TableStrategy> getStrategyRegister(){
+    public static Map<String, RouterStrategy> getStrategyRegister(){
         return strategyRegister;
     }
 
@@ -59,7 +59,7 @@ public class TabelStrategyConfigHolder {
         return strategyTables;
     }
 
-    public static TableStrategy getTableStrategy(String tableName) {
+    public static RouterStrategy getTableStrategy(String tableName) {
         return tableStrategyRouter.get(tableName);
     }
 
