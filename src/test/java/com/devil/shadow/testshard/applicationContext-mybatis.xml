@@ -95,27 +95,38 @@
     </bean>
 
     <!--&lt;!&ndash; SQL会话配置,主要是用于MybatisDao的setSqlSessionTemplate &ndash;&gt;-->
-    <!--<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">-->
-        <!--<constructor-arg index="0" ref="sqlSessionFactory"/>-->
-        <!--<constructor-arg index="1" value="SIMPLE"/>-->
-    <!--</bean>-->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+        <constructor-arg index="1" value="SIMPLE"/>
+    </bean>
 
     <!-- ==================================事务相关配置========================================= -->
 
     <!-- ==================================shard相关配置========================================= -->
-    <bean id="shardSqlSessionFactory" class="org.devil.shadow.support.ShardDateSouceFactoryBean">
+    <!--<bean id="shardSqlSessionFactory" class="org.devil.shadow.support.ShardDateSouceFactoryBean">-->
+        <!--<property name="sessionFactorys">-->
+            <!--<map>-->
+                <!--<entry key="session1" value-ref="sqlSessionFactory" />-->
+                <!--<entry key="session2" value-ref="sqlSessionFactory" />-->
+            <!--</map>-->
+        <!--</property>-->
+        <!--<property name="shardStrategy" value="com.devil.shadow.testshard.MyShardStragy"/>-->
+    <!--</bean>-->
+
+    <bean id="shardSqlSessionTemplate" class="org.devil.shadow.support.MyBatisSqlSessionTemplate">
         <property name="shards">
             <map>
-                <entry key="db1" value-ref="sqlSessionFactory" />
-                <entry key="db2" value-ref="sqlSessionFactory" />
+                <entry key="db1" value-ref="dataSource" />
+                <entry key="db2" value-ref="dataSource2" />
+            </map>
+        </property>
+        <property name="sqlSessionTemplates">
+            <map>
+                <entry key="session1" value-ref="sqlSession" />
+                <entry key="session2" value-ref="sqlSession" />
             </map>
         </property>
         <property name="shardStrategy" value="com.devil.shadow.testshard.MyShardStragy"/>
     </bean>
-
-    <!--<bean id="shardSqlSessionTemplate" class="org.devil.shadow.support.MyBatisSqlSessionTemplate">-->
-        <!--<property name="shards" ref="shardSqlSessionFactory" />-->
-    <!--</bean>-->
-
 
 </beans>

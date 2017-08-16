@@ -1,10 +1,7 @@
 package org.devil.shadow.support;
 
 import org.apache.ibatis.executor.BatchResult;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.ResultHandler;
-import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.*;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -22,10 +19,22 @@ public class MyBatisSqlSessionTemplate implements InitializingBean, SqlSession {
 
     protected Map<String, SqlSessionTemplate> sqlSessionTemplates = new HashMap<String, SqlSessionTemplate>();
     private Map<String, DataSource> shards;
+    private String shardStrategy;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-
+        // TODO 没有找到对应的template则自己新建
+//        for (Shard shard : shards) {
+//            MySqlSessionFactoryBean factoryBean = new MySqlSessionFactoryBean();
+//            factoryBean.setConfigLocations(configLocations);
+//            factoryBean.setDataSource(shard.getDataSource());
+//            try {
+//                SqlSessionFactory sqlSessionFactory = factoryBean.getObject();
+//                CURRENT_THREAD_SQLMAP_CLIENT_TEMPLATES.put(shard.getId(), new SqlSessionTemplate(sqlSessionFactory));
+//            } catch (Exception e) {
+//                throw new SystemErrorException("create sqlSessionFactory error!", e);
+//            }
+//        }
     }
 
     @Override
@@ -170,5 +179,21 @@ public class MyBatisSqlSessionTemplate implements InitializingBean, SqlSession {
 
     public void setShards(Map<String, DataSource> shards) {
         this.shards = shards;
+    }
+
+    public Map<String, SqlSessionTemplate> getSqlSessionTemplates() {
+        return sqlSessionTemplates;
+    }
+
+    public void setSqlSessionTemplates(Map<String, SqlSessionTemplate> sqlSessionTemplates) {
+        this.sqlSessionTemplates = sqlSessionTemplates;
+    }
+
+    public String getShardStrategy() {
+        return shardStrategy;
+    }
+
+    public void setShardStrategy(String shardStrategy) {
+        this.shardStrategy = shardStrategy;
     }
 }

@@ -19,6 +19,7 @@ import java.util.Map;
 public class ShardDateSouceFactoryBean implements FactoryBean<Map<String, SqlSessionFactory>>, InitializingBean, DisposableBean {
 
     private Map<String, SqlSessionFactory> shards;
+    private Map<String, SqlSessionFactory> sessionFactorys;
     private String shardStrategy;
 
     @Override
@@ -60,5 +61,13 @@ public class ShardDateSouceFactoryBean implements FactoryBean<Map<String, SqlSes
 
     public void setShardStrategy(String shardStrategy) {
         this.shardStrategy = shardStrategy;
+    }
+
+    public Map<String, SqlSessionFactory> getSessionFactorys() {
+        return sessionFactorys;
+    }
+
+    public void setSessionFactorys(Map<String, SqlSessionFactory> sessionFactorys) {
+        this.sessionFactorys = sessionFactorys;
     }
 }
