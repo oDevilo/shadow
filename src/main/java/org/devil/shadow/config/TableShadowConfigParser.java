@@ -1,4 +1,4 @@
-package org.devil.shadow.support;
+package org.devil.shadow.config;
 
 import com.thoughtworks.xstream.XStream;
 import org.devil.shadow.config.TabelStrategyConfigHolder;
@@ -11,7 +11,7 @@ import java.io.InputStream;
 /**
  * Created by devil on 2017/7/14.
  */
-public class ShadowConfigParser {
+public class TableShadowConfigParser {
 
     public void parse(InputStream input) throws Exception {
         XStream xstream = new XStream();

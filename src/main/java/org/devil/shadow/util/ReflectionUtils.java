@@ -6,7 +6,7 @@ import org.apache.ibatis.logging.LogFactory;
 import java.lang.reflect.*;
 
 public class ReflectionUtils {
-    private static final Log logger = LogFactory.getLog(ReflectionUtils.class);
+    private static final Log log = LogFactory.getLog(ReflectionUtils.class);
 
     public ReflectionUtils() {
     }
@@ -21,7 +21,7 @@ public class ReflectionUtils {
             try {
                 field.set(object, value);
             } catch (IllegalAccessException var5) {
-                ;
+                log.error("ReflectionUtils setFieldValue error ", var5);
             }
 
         }
@@ -38,7 +38,7 @@ public class ReflectionUtils {
             try {
                 result = field.get(object);
             } catch (IllegalAccessException var5) {
-                ;
+                log.error("ReflectionUtils getFieldValue error ", var5);
             }
 
             return result;
@@ -55,6 +55,7 @@ public class ReflectionUtils {
             try {
                 return method.invoke(object, parameters);
             } catch (IllegalAccessException var6) {
+                log.error("ReflectionUtils invokeMethod error ", var6);
                 return null;
             }
         }
@@ -102,19 +103,19 @@ public class ReflectionUtils {
     public static Class getSuperClassGenricType(Class clazz, int index) {
         Type genType = clazz.getGenericSuperclass();
         if(!(genType instanceof ParameterizedType)) {
-            logger.warn(clazz.getSimpleName() + "'s superclass not ParameterizedType");
+            log.warn(clazz.getSimpleName() + "'s superclass not ParameterizedType");
             return Object.class;
         } else {
             Type[] params = ((ParameterizedType)genType).getActualTypeArguments();
             if(index < params.length && index >= 0) {
                 if(!(params[index] instanceof Class)) {
-                    logger.warn(clazz.getSimpleName() + " not set the actual class on superclass generic parameter");
+                    log.warn(clazz.getSimpleName() + " not set the actual class on superclass generic parameter");
                     return Object.class;
                 } else {
                     return (Class)params[index];
                 }
             } else {
-                logger.warn("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: " + params.length);
+                log.warn("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: " + params.length);
                 return Object.class;
             }
         }

@@ -1,4 +1,4 @@
-package org.devil.shadow.znoused;
+package org.devil.shadow.support;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.FactoryBean;

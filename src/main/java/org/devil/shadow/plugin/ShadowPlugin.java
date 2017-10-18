@@ -10,7 +10,7 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.*;
 import org.devil.shadow.constants.TagConstants;
 import org.devil.shadow.converter.SqlConverterFactory;
-import org.devil.shadow.support.ShadowConfigParser;
+import org.devil.shadow.config.TableShadowConfigParser;
 import org.devil.shadow.util.ReflectionUtils;
 
 import java.io.IOException;
@@ -85,7 +85,7 @@ public class ShadowPlugin implements Interceptor {
             InputStream input = null;
             try {
                 input = Resources.getResourceAsStream(config);
-                ShadowConfigParser parser = new ShadowConfigParser();
+                TableShadowConfigParser parser = new TableShadowConfigParser();
                 parser.parse(input);
             } catch (IOException e1) {
                 log.error("Get table strategy file failed.", e1);
