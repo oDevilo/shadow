@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE shadow PUBLIC "-//shadow.devil.com//DTD shadow 2.0//EN"
+<!DOCTYPE tableShadow PUBLIC "-//shadow.devil.com//DTD tableShadow 2.0//EN"
         "http://shadow.devil.com/dtd/tableStrategy-config.dtd">
-<shadow>
-    <strategy name="test1" strategyClass="com.devil.shadow.plugTable.TestStra">
+<tableShadow>
+    <tableStrategy>
+        <name>test1</name>
         <tables>test,user</tables>
-    </strategy>
-    <strategy name="test2" strategyClass="com.devil.shadow.plugTable.TestStra">
+        <strategyClass>com.devil.shadow.plugTable.TestStra</strategyClass>
+    </tableStrategy>
+    <tableStrategy>
+        <name>test2</name>
         <tables>test2</tables>
-    </strategy>
-</shadow>
+        <strategyClass>com.devil.shadow.plugTable.TestStra</strategyClass>
+    </tableStrategy>
+</tableShadow>

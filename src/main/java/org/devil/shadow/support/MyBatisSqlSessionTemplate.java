@@ -25,7 +25,7 @@ public class MyBatisSqlSessionTemplate implements InitializingBean, SqlSession {
     public void afterPropertiesSet() throws Exception {
         for (String name : shards.keySet()) {
             if (null == sqlSessionTemplates.get(name)) { // 没有找到对应的template则自己新建
-                sqlSessionTemplates.put(name, new SqlSessionTemplate());
+//                sqlSessionTemplates.put(name, new SqlSessionTemplate());
             }
         }
         
