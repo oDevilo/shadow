@@ -2,14 +2,14 @@ package com.devil.shadow.plugTable;
 
 import com.devil.shadow.model.TestModel;
 import com.devil.shadow.model.UserModel;
-import org.devil.shadow.strategy.RouterStrategy;
+import org.devil.shadow.strategy.TableStrategy;
 
 import java.util.HashMap;
 
 /**
  * Created by devil on 2017/8/2.
  */
-public class TestStra implements RouterStrategy {
+public class TestStra implements TableStrategy {
     @Override
     public String convertTable(String tableName, Object param, String mapperId) {
         Long id;

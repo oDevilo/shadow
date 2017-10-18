@@ -1,31 +1,22 @@
-package org.devil.shadow.support;
+package org.devil.shadow.znoused;
 
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.devil.shadow.strategy.ShardStrategy;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.core.io.Resource;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
 
-import javax.sql.DataSource;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * Created by devil on 2017/8/8.
  */
-public class ShardDateSouceFactoryBean implements FactoryBean<Map<String, SqlSessionFactory>>, InitializingBean, DisposableBean {
+public class ShardDateSouceFactoryBean implements FactoryBean<Map<String, SqlSessionFactory>>, InitializingBean, ApplicationListener<ApplicationEvent> {
 
     private Map<String, SqlSessionFactory> shards;
     private Map<String, SqlSessionFactory> sessionFactorys;
     private String shardStrategy;
-
-    @Override
-    public void destroy() throws Exception {
-
-    }
 
     @Override
     public Map<String, SqlSessionFactory> getObject() throws Exception {
@@ -69,5 +60,10 @@ public class ShardDateSouceFactoryBean implements FactoryBean<Map<String, SqlSes
 
     public void setSessionFactorys(Map<String, SqlSessionFactory> sessionFactorys) {
         this.sessionFactorys = sessionFactorys;
+    }
+
+    @Override
+    public void onApplicationEvent(ApplicationEvent event) {
+
     }
 }

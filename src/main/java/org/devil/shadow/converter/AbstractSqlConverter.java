@@ -3,7 +3,7 @@ package org.devil.shadow.converter;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.util.deparser.StatementDeParser;
 import org.devil.shadow.config.TabelStrategyConfigHolder;
-import org.devil.shadow.strategy.RouterStrategy;
+import org.devil.shadow.strategy.TableStrategy;
 
 public abstract class AbstractSqlConverter implements SqlConverter {
     public AbstractSqlConverter() {
@@ -20,7 +20,7 @@ public abstract class AbstractSqlConverter implements SqlConverter {
     }
 
     protected String convertTableName(String tableName, Object params, String mapperId) {
-        RouterStrategy strategy = TabelStrategyConfigHolder.getTableStrategy(tableName);
+        TableStrategy strategy = TabelStrategyConfigHolder.getTableStrategy(tableName);
         return strategy == null ? tableName : strategy.convertTable(tableName, params, mapperId);
     }
 

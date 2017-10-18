@@ -4,7 +4,7 @@ import org.apache.ibatis.io.Resources;
 import org.devil.shadow.config.TabelStrategyConfigHolder;
 import org.devil.shadow.constants.TagConstants;
 import org.devil.shadow.exception.ShadowException;
-import org.devil.shadow.strategy.RouterStrategy;
+import org.devil.shadow.strategy.TableStrategy;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -36,7 +36,7 @@ public class TableStrategyParseHandler extends DefaultHandler {
             String className = attributes.getValue(TagConstants.TableStrategyTag.STRATEGY_CLASS);
             try {
                 Class<?> clazz = Class.forName(className);
-                RouterStrategy strategy = (RouterStrategy) clazz.newInstance();
+                TableStrategy strategy = (TableStrategy) clazz.newInstance();
                 TabelStrategyConfigHolder.register(name, strategy);
             } catch (ClassNotFoundException var1) {
                 throw new SAXException("table STRATEGY : " + name + " STRATEGY_CLASS Not Found Class");

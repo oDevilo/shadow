@@ -1,6 +1,6 @@
 package org.devil.shadow.strategy;
 
-public interface RouterStrategy {
+public interface TableStrategy {
     /**
      * 返回转换后的table NAME
      * @param tableName

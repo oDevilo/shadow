@@ -54,7 +54,6 @@
 		</dependency>
 		<!-- Spring end -->
 
-
 		<!-- 添加mysql驱动包 -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -81,6 +80,13 @@
 		    <groupId>net.sf.jsqlparser</groupId>
 		    <artifactId>jsqlparser</artifactId>
 		    <version>0.8.0</version>
+		</dependency>
+
+		<!-- xml工具 -->
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.10</version>
 		</dependency>
 
 		<!-- logger begin -->

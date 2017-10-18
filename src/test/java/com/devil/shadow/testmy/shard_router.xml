@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<shadow>
-    <ShardGroup> <!-- 一个ShardGroup 代表了这些表，划分到哪些库 -->
-        <name></name>
+<shadowShard>
+    <!-- 一个ShardGroup 代表了这些表，划分到哪些库
+        environment:对应的数据库
+        strategy:分配策略
+     -->
+    <ShardGroup>
+        <groupName></groupName>
         <tables></tables>
-        <environment></environment>
-        <strategy></strategy>
+        <strategyClass></strategyClass>
     </ShardGroup>
-</shadow>
+</shadowShard>
 

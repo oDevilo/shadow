@@ -103,7 +103,7 @@
     <!-- ==================================事务相关配置========================================= -->
 
     <!-- ==================================shard相关配置========================================= -->
-    <!--<bean id="shardSqlSessionFactory" class="org.devil.shadow.support.ShardDateSouceFactoryBean">-->
+    <!--<bean id="shardSqlSessionFactory" claorg.devil.shadow.noused.ShardDateSouceFactoryBeanBean">-->
         <!--<property name="sessionFactorys">-->
             <!--<map>-->
                 <!--<entry key="session1" value-ref="sqlSessionFactory" />-->

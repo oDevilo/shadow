@@ -14,7 +14,7 @@ mybatis-config.xml
 </plugins>
 ```
 
-table_router.xml
+table_strategy.xml
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>

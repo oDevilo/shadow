@@ -7,7 +7,7 @@
     </settings>
     <plugins>
         <plugin interceptor="org.devil.shadow.plugin.ShadowPlugin">
-            <property name="tableRouter" value="com/devil/shadow/testmy/table_router.xml" />
+            <property name="tableStrategy" value="com/devil/shadow/testmy/table_router.xml" />
         </plugin>
     </plugins>
     <environments default="development1">
