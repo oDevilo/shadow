@@ -23,6 +23,12 @@ public class MyBatisSqlSessionTemplate implements InitializingBean, SqlSession {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        for (String name : shards.keySet()) {
+            if (null == sqlSessionTemplates.get(name)) { // 没有找到对应的template则自己新建
+                sqlSessionTemplates.put(name, new SqlSessionTemplate());
+            }
+        }
+        
         // TODO 没有找到对应的template则自己新建
 //        for (Shard shard : shards) {
 //            MySqlSessionFactoryBean factoryBean = new MySqlSessionFactoryBean();
