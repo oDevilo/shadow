@@ -1,7 +1,11 @@
 package org.devil.shadow.support;
 
 import org.apache.ibatis.executor.BatchResult;
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.*;
+import org.devil.shadow.exception.ShadowException;
+import org.devil.shadow.strategy.ShardStrategy;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -15,169 +19,103 @@ import java.util.Set;
 /**
  * Created by devil on 2017/8/7.
  */
-public class MyBatisSqlSessionTemplate implements InitializingBean, SqlSession {
+public class MyBatisSqlSessionTemplate extends AbstractUnsupportedSqlSessionTemplate implements InitializingBean, SqlSession {
+    private final Log log = LogFactory.getLog(getClass());
 
     protected Map<String, SqlSessionTemplate> sqlSessionTemplates = new HashMap<String, SqlSessionTemplate>();
     private Map<String, DataSource> shards;
     private String shardStrategy;
+    private ShardStrategy strategy;
+    private String[] configLocations;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        for (String name : shards.keySet()) {
-            if (null == sqlSessionTemplates.get(name)) { // 没有找到对应的template则自己新建
-//                sqlSessionTemplates.put(name, new SqlSessionTemplate());
+        try {
+            for (String name : shards.keySet()) {
+                MySqlSessionFactoryBean factoryBean = new MySqlSessionFactoryBean();
+                factoryBean.setConfigLocations(configLocations);
+                factoryBean.setDataSource(shards.get(name));
+
+                    SqlSessionFactory sqlSessionFactory = factoryBean.getObject();
+                    sqlSessionTemplates.put(name, new SqlSessionTemplate(sqlSessionFactory));
             }
+        } catch (Exception e) {
+            throw new ShadowException("create sqlSessionFactory error!", e);
         }
-        
-        // TODO 没有找到对应的template则自己新建
-//        for (Shard shard : shards) {
-//            MySqlSessionFactoryBean factoryBean = new MySqlSessionFactoryBean();
-//            factoryBean.setConfigLocations(configLocations);
-//            factoryBean.setDataSource(shard.getDataSource());
-//            try {
-//                SqlSessionFactory sqlSessionFactory = factoryBean.getObject();
-//                CURRENT_THREAD_SQLMAP_CLIENT_TEMPLATES.put(shard.getId(), new SqlSessionTemplate(sqlSessionFactory));
-//            } catch (Exception e) {
-//                throw new SystemErrorException("create sqlSessionFactory error!", e);
-//            }
-//        }
+
+        try {
+            strategy = (ShardStrategy) Class.forName(shardStrategy).newInstance();
+        } catch (Exception e) {
+            throw new ShadowException("create strategy error!", e);
+        }
+
+        log.debug("MyBatisSqlSessionTemplate afterPropertiesSet");
     }
 
-    @Override
-    public <T> T selectOne(String statement) {
-        return null;
+    /**
+     * 根据策略，找到对应的库
+     * @param parameter
+     * @return
+     */
+    public SqlSessionTemplate findStrategyTemplate(Object parameter) {
+        String shardName = strategy.convertDbServer(parameter);
+        SqlSessionTemplate template = sqlSessionTemplates.get(shardName);
+        if (template == null) {
+            throw new ShadowException("find no match template");
+        }
+        return template;
     }
+
 
     @Override
     public <T> T selectOne(String statement, Object parameter) {
-        return null;
-    }
-
-    @Override
-    public <E> List<E> selectList(String statement) {
-        return null;
+        return findStrategyTemplate(parameter).selectOne(statement, parameter);
     }
 
     @Override
     public <E> List<E> selectList(String statement, Object parameter) {
-        return null;
+        return findStrategyTemplate(parameter).selectList(statement, parameter);
     }
 
     @Override
     public <E> List<E> selectList(String statement, Object parameter, RowBounds rowBounds) {
-        return null;
-    }
-
-    @Override
-    public <K, V> Map<K, V> selectMap(String statement, String mapKey) {
-        return null;
+        return findStrategyTemplate(parameter).selectList(statement, parameter, rowBounds);
     }
 
     @Override
     public <K, V> Map<K, V> selectMap(String statement, Object parameter, String mapKey) {
-        return null;
+        return findStrategyTemplate(parameter).selectMap(statement, parameter, mapKey);
     }
 
     @Override
     public <K, V> Map<K, V> selectMap(String statement, Object parameter, String mapKey, RowBounds rowBounds) {
-        return null;
+        return findStrategyTemplate(parameter).selectMap(statement, parameter, mapKey, rowBounds);
     }
 
     @Override
     public void select(String statement, Object parameter, ResultHandler handler) {
-
-    }
-
-    @Override
-    public void select(String statement, ResultHandler handler) {
-
+        findStrategyTemplate(parameter).select(statement, parameter, handler);
     }
 
     @Override
     public void select(String statement, Object parameter, RowBounds rowBounds, ResultHandler handler) {
-
-    }
-
-    @Override
-    public int insert(String statement) {
-        return 0;
+        findStrategyTemplate(parameter).select(statement, parameter, rowBounds, handler);
     }
 
     @Override
     public int insert(String statement, Object parameter) {
-        return 0;
-    }
-
-    @Override
-    public int update(String statement) {
-        return 0;
+        return findStrategyTemplate(parameter).insert(statement, parameter);
     }
 
     @Override
     public int update(String statement, Object parameter) {
-        return 0;
-    }
-
-    @Override
-    public int delete(String statement) {
-        return 0;
+        return findStrategyTemplate(parameter).update(statement, parameter);
     }
 
     @Override
     public int delete(String statement, Object parameter) {
-        return 0;
+        return findStrategyTemplate(parameter).delete(statement, parameter);
     }
-
-    @Override
-    public void commit() {
-
-    }
-
-    @Override
-    public void commit(boolean force) {
-
-    }
-
-    @Override
-    public void rollback() {
-
-    }
-
-    @Override
-    public void rollback(boolean force) {
-
-    }
-
-    @Override
-    public List<BatchResult> flushStatements() {
-        return null;
-    }
-
-    @Override
-    public void close() {
-
-    }
-
-    @Override
-    public void clearCache() {
-
-    }
-
-    @Override
-    public Configuration getConfiguration() {
-        return null;
-    }
-
-    @Override
-    public <T> T getMapper(Class<T> type) {
-        return null;
-    }
-
-    @Override
-    public Connection getConnection() {
-        return null;
-    }
-
 
     public Map<String, DataSource> getShards() {
         return shards;
@@ -187,19 +125,19 @@ public class MyBatisSqlSessionTemplate implements InitializingBean, SqlSession {
         this.shards = shards;
     }
 
-    public Map<String, SqlSessionTemplate> getSqlSessionTemplates() {
-        return sqlSessionTemplates;
-    }
-
-    public void setSqlSessionTemplates(Map<String, SqlSessionTemplate> sqlSessionTemplates) {
-        this.sqlSessionTemplates = sqlSessionTemplates;
-    }
-
     public String getShardStrategy() {
         return shardStrategy;
     }
 
     public void setShardStrategy(String shardStrategy) {
         this.shardStrategy = shardStrategy;
+    }
+
+    public void setConfigLocations(String[] configLocations) {
+        this.configLocations = configLocations;
+    }
+
+    public void setConfigLocation(String configLocation) {
+        this.configLocations = new String[]{configLocation};
     }
 }

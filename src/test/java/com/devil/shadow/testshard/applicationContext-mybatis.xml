@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-    http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-    http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-4.0.xsd
     http://www.springframework.org/schema/beans
@@ -19,95 +14,55 @@
 
     <bean id="applicationUtil" class="com.devil.shadow.ApplicationUtil" />
 
-    <!-- ========================================配置数据源========================================= -->
-    <bean id="dataSource" name="dataSource"
-          class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
-          destroy-method="close">
+    <context:component-scan base-package="com.devil.shadow" />
+
+    <bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="${jdbc.url.db1}"/>
         <property name="username" value="${jdbc.username.db1}"/>
         <property name="password" value="${jdbc.password.db1}"/>
-        <!-- 初始化连接大小 -->
-        <property name="initialSize" value="0"/>
-        <!-- 连接池最大使用连接数量 -->
-        <property name="maxActive" value="20"/>
-        <!-- 连接池最小空闲 -->
-        <property name="minIdle" value="0"/>
-        <!-- 获取连接最大等待时间 -->
-        <property name="maxWait" value="60000"/>
-        <property name="testOnBorrow" value="false"/>
-        <property name="testOnReturn" value="false"/>
-        <property name="testWhileIdle" value="true"/>
-        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
-        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-        <property name="minEvictableIdleTimeMillis" value="25200000"/>
-        <!-- 打开removeAbandoned功能 -->
-        <property name="removeAbandoned" value="true"/>
-        <!-- 1800秒，也就是30分钟 -->
-        <property name="removeAbandonedTimeout" value="1800"/>
-        <!-- 关闭abanded连接时输出错误日志 -->
-        <property name="logAbandoned" value="true"/>
-        <!-- 监控数据库 -->
-        <property name="filters" value="mergeStat"/>
     </bean>
 
-    <bean id="dataSource2" name="dataSource2"
-          class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
-          destroy-method="close">
+    <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="${jdbc.url.db2}"/>
         <property name="username" value="${jdbc.username.db2}"/>
         <property name="password" value="${jdbc.password.db2}"/>
-        <!-- 初始化连接大小 -->
-        <property name="initialSize" value="0"/>
-        <!-- 连接池最大使用连接数量 -->
-        <property name="maxActive" value="20"/>
-        <!-- 连接池最小空闲 -->
-        <property name="minIdle" value="0"/>
-        <!-- 获取连接最大等待时间 -->
-        <property name="maxWait" value="60000"/>
-        <property name="testOnBorrow" value="false"/>
-        <property name="testOnReturn" value="false"/>
-        <property name="testWhileIdle" value="true"/>
-        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
-        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-        <property name="minEvictableIdleTimeMillis" value="25200000"/>
-        <!-- 打开removeAbandoned功能 -->
-        <property name="removeAbandoned" value="true"/>
-        <!-- 1800秒，也就是30分钟 -->
-        <property name="removeAbandonedTimeout" value="1800"/>
-        <!-- 关闭abanded连接时输出错误日志 -->
-        <property name="logAbandoned" value="true"/>
-        <!-- 监控数据库 -->
-        <property name="filters" value="mergeStat"/>
     </bean>
 
     <!-- ========================================针对myBatis的配置项============================== -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
+    <bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource1"/>
     </bean>
 
-    <!-- 配置扫描器 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <!-- 扫描com.ys.mapper这个包以及它的子包下的所有映射接口类 -->
         <property name="basePackage" value="com.devil.shadow.model"/>
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1"/>
     </bean>
 
-    <!--&lt;!&ndash; SQL会话配置,主要是用于MybatisDao的setSqlSessionTemplate &ndash;&gt;-->
-    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    <bean id="sqlSession1" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory1"/>
         <constructor-arg index="1" value="SIMPLE"/>
     </bean>
 
-    <!-- ==================================事务相关配置========================================= -->
+    <bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource2"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.devil.shadow.model"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory2"/>
+    </bean>
+
+    <bean id="sqlSession2" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory2"/>
+        <constructor-arg index="1" value="SIMPLE"/>
+    </bean>
 
     <!-- ==================================shard相关配置========================================= -->
-    <!--<bean id="shardSqlSessionFactory" claorg.devil.shadow.noused.ShardDateSouceFactoryBeanBean">-->
+    <!--<bean id="shardSqlSessionFactory" class="org.devil.shadow.support.ShardDateSouceFactoryBean">-->
         <!--<property name="sessionFactorys">-->
             <!--<map>-->
-                <!--<entry key="session1" value-ref="sqlSessionFactory" />-->
-                <!--<entry key="session2" value-ref="sqlSessionFactory" />-->
+                <!--<entry key="session1" value-ref="sqlSessionFactory1" />-->
+                <!--<entry key="session2" value-ref="sqlSessionFactory2" />-->
             <!--</map>-->
         <!--</property>-->
         <!--<property name="shardStrategy" value="com.devil.shadow.testshard.MyShardStragy"/>-->
@@ -116,17 +71,12 @@
     <bean id="shardSqlSessionTemplate" class="org.devil.shadow.support.MyBatisSqlSessionTemplate">
         <property name="shards">
             <map>
-                <entry key="db1" value-ref="dataSource" />
+                <entry key="db1" value-ref="dataSource1" />
                 <entry key="db2" value-ref="dataSource2" />
             </map>
         </property>
-        <property name="sqlSessionTemplates">
-            <map>
-                <entry key="session1" value-ref="sqlSession" />
-                <entry key="session2" value-ref="sqlSession" />
-            </map>
-        </property>
         <property name="shardStrategy" value="com.devil.shadow.testshard.MyShardStragy"/>
+        <property name="configLocation" value="classpath*:com/devil/shadow/plugTable/mybatis-config.xml"/>
     </bean>
 
 </beans>

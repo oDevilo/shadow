@@ -15,17 +15,23 @@ import java.util.Map;
  * Created by devil on 2017/6/13.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:com/devil/shadow/testshard/applicationContext-mybatis.xml"})
+@ContextConfiguration(locations = {"classpath:com/devil/shadow/testshard/applicationContext-mybatis.xml"})
 public class ShardTest {
     @Autowired
     private TestMapper testMapper;
+    @Autowired
+    private TestDao testDao;
 
     @Test
-    public void testShard(){
+    public void testShard() {
         System.out.println(testMapper.selectByPrimaryKey(1L));
         Map<String, DataSource> bean = (Map<String, DataSource>) ApplicationUtil.getBean("shardSqlSessionFactory");
         System.out.println(bean);
     }
 
+    @Test
+    public void testDao() {
+        System.out.println(testDao.selectById(1L));
+    }
 
 }

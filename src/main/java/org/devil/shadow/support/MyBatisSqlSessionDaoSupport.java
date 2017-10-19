@@ -14,8 +14,8 @@ public class MyBatisSqlSessionDaoSupport extends DaoSupport {
     private SqlSession sqlSession;
 
     @Autowired(required = false)
-    public final void setSqlSessionTemplate(MyBatisSqlSessionTemplate sqlSessionTemplate) {
-        this.sqlSession = sqlSessionTemplate;
+    public final void setSqlSessionTemplate(MyBatisSqlSessionTemplate shardSqlSessionTemplate) {
+        this.sqlSession = shardSqlSessionTemplate;
     }
 
     public final SqlSession getSqlSession() {

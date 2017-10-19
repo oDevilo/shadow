@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by devil on 2017/8/8.
  */
-public class ShardDateSouceFactoryBean implements FactoryBean<Map<String, SqlSessionFactory>>, InitializingBean, ApplicationListener<ApplicationEvent> {
+public class ShardDateSouceFactoryBean implements FactoryBean<Map<String, SqlSessionFactory>>, InitializingBean {
 
     private Map<String, SqlSessionFactory> shards;
     private Map<String, SqlSessionFactory> sessionFactorys;
@@ -62,8 +62,4 @@ public class ShardDateSouceFactoryBean implements FactoryBean<Map<String, SqlSes
         this.sessionFactorys = sessionFactorys;
     }
 
-    @Override
-    public void onApplicationEvent(ApplicationEvent event) {
-
-    }
 }

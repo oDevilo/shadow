@@ -28,7 +28,6 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.spri
                 <entry key="less" value-ref="dataSource2"/>
             </map>
         </property>
-        <property name="shardStrategy" value="com.devil.shadow.dynamic.MyStrategy"/>
     </bean>
 
     <!-- 配置sqlSessionFactory -->
