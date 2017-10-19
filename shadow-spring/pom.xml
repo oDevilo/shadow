@@ -65,6 +65,13 @@
             <version>1.2.2</version>
         </dependency>
 
+        <!-- xml工具 -->
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
         <!-- 为了方便进行单元测试，添加spring-test包 -->
         <dependency>
             <groupId>org.springframework</groupId>

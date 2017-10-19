@@ -12,4 +12,20 @@
     <version>1.0</version>
 
     <name>shadow-plugin</name>
+
+    <dependencies>
+        <!-- sql解析插件 -->
+        <dependency>
+            <groupId>net.sf.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+            <version>0.8.0</version>
+        </dependency>
+
+        <!-- xml工具 -->
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.10</version>
+        </dependency>
+    </dependencies>
 </project>

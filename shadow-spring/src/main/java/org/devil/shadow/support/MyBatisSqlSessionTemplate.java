@@ -6,7 +6,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.devil.shadow.exception.ShadowException;
+import org.devil.shadow.exception.ShadowSpringException;
 import org.devil.shadow.strategy.ShardStrategy;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.InitializingBean;
@@ -40,13 +40,13 @@ public class MyBatisSqlSessionTemplate extends AbstractUnsupportedSqlSessionTemp
                     sqlSessionTemplates.put(name, new SqlSessionTemplate(sqlSessionFactory));
             }
         } catch (Exception e) {
-            throw new ShadowException("create sqlSessionFactory error!", e);
+            throw new ShadowSpringException("create sqlSessionFactory error!", e);
         }
 
         try {
             strategy = (ShardStrategy) Class.forName(shardStrategy).newInstance();
         } catch (Exception e) {
-            throw new ShadowException("create strategy error!", e);
+            throw new ShadowSpringException("create strategy error!", e);
         }
 
         log.debug("MyBatisSqlSessionTemplate afterPropertiesSet");
@@ -61,7 +61,7 @@ public class MyBatisSqlSessionTemplate extends AbstractUnsupportedSqlSessionTemp
         String shardName = strategy.convertDbServer(parameter);
         SqlSessionTemplate template = sqlSessionTemplates.get(shardName);
         if (template == null) {
-            throw new ShadowException("find no match template");
+            throw new ShadowSpringException("find no match template");
         }
         return template;
     }
