@@ -31,6 +31,7 @@
     <!-- ========================================针对myBatis的配置项============================== -->
     <bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource1"/>
+        <property name="configLocation" value="classpath:org/devil/shadow/testshard/mybatis-config.xml"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -45,6 +46,7 @@
 
     <bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource2"/>
+        <property name="configLocation" value="classpath:org/devil/shadow/testshard/mybatis-config.xml"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -57,26 +59,14 @@
         <constructor-arg index="1" value="SIMPLE"/>
     </bean>
 
-    <!-- ==================================shard相关配置========================================= -->
-    <!--<bean id="shardSqlSessionFactory" class="org.devil.shadow.support.ShardDateSouceFactoryBean">-->
-        <!--<property name="sessionFactorys">-->
-            <!--<map>-->
-                <!--<entry key="session1" value-ref="sqlSessionFactory1" />-->
-                <!--<entry key="session2" value-ref="sqlSessionFactory2" />-->
-            <!--</map>-->
-        <!--</property>-->
-        <!--<property name="shardStrategy" value="org.devil.shadow.testshard.MyShardStragy"/>-->
-    <!--</bean>-->
-
     <bean id="shardSqlSessionTemplate" class="org.devil.shadow.support.MyBatisSqlSessionTemplate">
-        <property name="shards">
+        <property name="sqlSessionTemplates">
             <map>
-                <entry key="db1" value-ref="dataSource1" />
-                <entry key="db2" value-ref="dataSource2" />
+                <entry key="db1" value-ref="sqlSession1" />
+                <entry key="db2" value-ref="sqlSession2" />
             </map>
         </property>
         <property name="shardStrategy" value="org.devil.shadow.testshard.MyShardStragy"/>
-        <property name="configLocation" value="classpath*:org/devil/shadow/plugTable/mybatis-config.xml"/>
     </bean>
 
 </beans>

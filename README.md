@@ -1,10 +1,11 @@
 # shadow
 
 ## TODO
- 1. 批量插入更新删除，多库查询
+ 1. 批量插入更新删除，多库查询(优化)
  2. 尝试支持Mapper形式
  3. 支持事务的管理
  4. 目前传参用map，要考虑model，还有基本类型
+ 5. mybatis-config.xml配置的位置
 
 # ShadowPlugin
 

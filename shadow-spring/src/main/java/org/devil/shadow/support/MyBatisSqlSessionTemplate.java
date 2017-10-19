@@ -29,13 +29,15 @@ public class MyBatisSqlSessionTemplate extends AbstractUnsupportedSqlSessionTemp
     @Override
     public void afterPropertiesSet() throws Exception {
         try {
-            for (String name : shards.keySet()) {
-                MySqlSessionFactoryBean factoryBean = new MySqlSessionFactoryBean();
-                factoryBean.setConfigLocations(configLocations);
-                factoryBean.setDataSource(shards.get(name));
+            if (shards != null) {
+                for (String name : shards.keySet()) {
+                    MySqlSessionFactoryBean factoryBean = new MySqlSessionFactoryBean();
+                    factoryBean.setConfigLocations(configLocations);
+                    factoryBean.setDataSource(shards.get(name));
 
-                SqlSessionFactory sqlSessionFactory = factoryBean.getObject();
-                sqlSessionTemplates.put(name, new SqlSessionTemplate(sqlSessionFactory));
+                    SqlSessionFactory sqlSessionFactory = factoryBean.getObject();
+                    sqlSessionTemplates.put(name, new SqlSessionTemplate(sqlSessionFactory));
+                }
             }
         } catch (Exception e) {
             throw new ShadowSpringException("create sqlSessionFactory error!", e);

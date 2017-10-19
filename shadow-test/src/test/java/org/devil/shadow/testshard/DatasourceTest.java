@@ -15,14 +15,14 @@ import java.util.List;
  * Created by devil on 2017/10/19.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:org/devil/shadow/testshard/applicationContext-mybatis.xml"})
-public class TranTest {
+@ContextConfiguration(locations = {"classpath:org/devil/shadow/testshard/applicationContext-mybatis-datasource.xml"})
+public class DatasourceTest {
 
     @Autowired
     private TestDao testDao;
 
     @Test
-    public void testDao() {
+    public void test1() {
         TestModel m1 = new TestModel();
         m1.setId(1L);
         m1.setName("222");
@@ -48,7 +48,12 @@ public class TranTest {
     }
 
     @Test
-    public void test() {
+    public void test2() {
+        System.out.println(testDao.selectById(1L));
+    }
+
+    @Test
+    public void test3() {
         List<TestModel> list = testDao.selectListShards(Arrays.asList(1L, 2L, 3L, 4L));
         for (TestModel testModel : list) {
             System.out.println(testModel);
