@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:jdbc.properties" />
+
+    <bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc.url.db1}"/>
+        <property name="username" value="${jdbc.username.db1}"/>
+        <property name="password" value="${jdbc.password.db1}"/>
+    </bean>
+
+    <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc.url.db2}"/>
+        <property name="username" value="${jdbc.username.db2}"/>
+        <property name="password" value="${jdbc.password.db2}"/>
+    </bean>
+
+    <bean id="dynamicDataSource" class="org.devil.shadow.dynamic.ShadowDynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="more" value-ref="dataSource1"/>
+                <entry key="less" value-ref="dataSource2"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- 配置sqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dynamicDataSource"/>
+        <property name="configLocation" value="classpath:org/devil/shadow/dynamic/mybatis-config.xml" />
+    </bean>
+
+    <!-- 配置扫描器 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="org.devil.shadow.model"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!-- SQL会话配置,主要是用于MybatisDao的setSqlSessionTemplate -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+        <constructor-arg index="1" value="SIMPLE"/>
+    </bean>
+
+</beans>

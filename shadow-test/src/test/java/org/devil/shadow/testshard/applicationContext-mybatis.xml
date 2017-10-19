@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!-- 加载mybatis的属性配置文件 -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <bean id="applicationUtil" class="org.devil.shadow.ApplicationUtil" />
+
+    <context:component-scan base-package="org.devil.shadow" />
+
+    <bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc.url.db1}"/>
+        <property name="username" value="${jdbc.username.db1}"/>
+        <property name="password" value="${jdbc.password.db1}"/>
+    </bean>
+
+    <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc.url.db2}"/>
+        <property name="username" value="${jdbc.username.db2}"/>
+        <property name="password" value="${jdbc.password.db2}"/>
+    </bean>
+
+    <!-- ========================================针对myBatis的配置项============================== -->
+    <bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource1"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="org.devil.shadow.model"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1"/>
+    </bean>
+
+    <bean id="sqlSession1" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory1"/>
+        <constructor-arg index="1" value="SIMPLE"/>
+    </bean>
+
+    <bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource2"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="org.devil.shadow.model"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory2"/>
+    </bean>
+
+    <bean id="sqlSession2" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory2"/>
+        <constructor-arg index="1" value="SIMPLE"/>
+    </bean>
+
+    <!-- ==================================shard相关配置========================================= -->
+    <!--<bean id="shardSqlSessionFactory" class="org.devil.shadow.support.ShardDateSouceFactoryBean">-->
+        <!--<property name="sessionFactorys">-->
+            <!--<map>-->
+                <!--<entry key="session1" value-ref="sqlSessionFactory1" />-->
+                <!--<entry key="session2" value-ref="sqlSessionFactory2" />-->
+            <!--</map>-->
+        <!--</property>-->
+        <!--<property name="shardStrategy" value="org.devil.shadow.testshard.MyShardStragy"/>-->
+    <!--</bean>-->
+
+    <bean id="shardSqlSessionTemplate" class="org.devil.shadow.support.MyBatisSqlSessionTemplate">
+        <property name="shards">
+            <map>
+                <entry key="db1" value-ref="dataSource1" />
+                <entry key="db2" value-ref="dataSource2" />
+            </map>
+        </property>
+        <property name="shardStrategy" value="org.devil.shadow.testshard.MyShardStragy"/>
+        <property name="configLocation" value="classpath*:org/devil/shadow/plugTable/mybatis-config.xml"/>
+    </bean>
+
+</beans>

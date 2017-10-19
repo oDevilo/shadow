@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>shadow</artifactId>
+        <groupId>org.devil.shadow</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>shadow-test</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.devil.shadow</groupId>
+            <artifactId>shadow-plugin</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.devil.shadow</groupId>
+            <artifactId>shadow-spring</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!-- 添加druid连接池包 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.28</version>
+        </dependency>
+    </dependencies>
+</project>

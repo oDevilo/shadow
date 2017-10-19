@@ -3,57 +3,22 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.devil.shadow</groupId>
 	<artifactId>shadow</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<version>1.0</version>
+	<modules>
+		<module>shadow-common</module>
+		<module>shadow-plugin</module>
+		<module>shadow-spring</module>
+		<module>shadow-test</module>
+	</modules>
+	<packaging>pom</packaging>
 
 	<name>shadow</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>4.1.3.RELEASE</spring.version>
-		<aspectj.version>1.8.4</aspectj.version>
 	</properties>
 
 	<dependencies>
-		<!-- Spring start -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${aspectj.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>${aspectj.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<!-- Spring end -->
-
 		<!-- 添加mysql驱动包 -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -67,12 +32,6 @@
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 			<version>3.2.8</version>
-		</dependency>
-		<!-- 添加mybatis与Spring整合的核心包 -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-			<version>1.2.2</version>
 		</dependency>
 
 		<!-- sql解析插件 -->
@@ -103,18 +62,15 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- 添加druid连接池包 -->
+		<!-- 添加junit单元测试包 -->
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
-			<version>1.0.28</version>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
 		</dependency>
-		<!-- 为了方便进行单元测试，添加spring-test包 -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
+
+
 		<!-- 添加junit单元测试包 -->
 		<dependency>
 			<groupId>junit</groupId>
