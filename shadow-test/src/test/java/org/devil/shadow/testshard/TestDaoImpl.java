@@ -5,6 +5,7 @@ import org.devil.shadow.support.MyBatisSqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,4 +19,15 @@ public class TestDaoImpl extends MyBatisSqlSessionDaoSupport implements TestDao 
         param.put("id", id)
 ;        return getSqlSession().selectOne("org.devil.shadow.model.TestMapper.selectByPrimaryKey", param);
     }
+
+    @Override
+    public int batchInsert(List<TestModel> list) {
+        return batchInsert("org.devil.shadow.model.TestMapper.BATCH_INSERT", list);
+    }
+
+    @Override
+    public List<TestModel> selectListShards(List<Long> ids) {
+        return selectList("org.devil.shadow.model.TestMapper.SELECT_BY_IDS", ids);
+    }
+
 }

@@ -19,4 +19,25 @@
       </if>
     </where>
   </select>
+  <insert id="BATCH_INSERT" parameterType="java.util.Map">
+    <![CDATA[
+            REPLACE INTO
+		    test(id, name, value)
+			VALUES
+			]]>
+    <foreach collection="list" item="item" index="index" separator=",">
+      <![CDATA[
+			 (#{item.id}, #{item.name}, #{item.value})
+            ]]>
+    </foreach>
+  </insert>
+
+  <select id="SELECT_BY_IDS" parameterType="java.util.Map" resultMap="BaseResultMap">
+    <![CDATA[
+            select * from test
+        ]]>
+    <where>
+      <foreach item="item" collection="list" open="id in (" separator="," close=")">#{item}</foreach>
+    </where>
+  </select>
 </mapper>

@@ -12,9 +12,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.InitializingBean;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by devil on 2017/8/7.
@@ -22,7 +20,7 @@ import java.util.Map;
 public class MyBatisSqlSessionTemplate extends AbstractUnsupportedSqlSessionTemplate implements InitializingBean, SqlSession {
     private final Log log = LogFactory.getLog(getClass());
 
-    protected Map<String, SqlSessionTemplate> sqlSessionTemplates = new HashMap<String, SqlSessionTemplate>();
+    private Map<String, SqlSessionTemplate> sqlSessionTemplates = new HashMap<String, SqlSessionTemplate>();
     private Map<String, DataSource> shards;
     private String shardStrategy;
     private ShardStrategy strategy;
@@ -36,8 +34,8 @@ public class MyBatisSqlSessionTemplate extends AbstractUnsupportedSqlSessionTemp
                 factoryBean.setConfigLocations(configLocations);
                 factoryBean.setDataSource(shards.get(name));
 
-                    SqlSessionFactory sqlSessionFactory = factoryBean.getObject();
-                    sqlSessionTemplates.put(name, new SqlSessionTemplate(sqlSessionFactory));
+                SqlSessionFactory sqlSessionFactory = factoryBean.getObject();
+                sqlSessionTemplates.put(name, new SqlSessionTemplate(sqlSessionFactory));
             }
         } catch (Exception e) {
             throw new ShadowSpringException("create sqlSessionFactory error!", e);
@@ -54,6 +52,7 @@ public class MyBatisSqlSessionTemplate extends AbstractUnsupportedSqlSessionTemp
 
     /**
      * 根据策略，找到对应的库
+     *
      * @param parameter
      * @return
      */
@@ -65,7 +64,6 @@ public class MyBatisSqlSessionTemplate extends AbstractUnsupportedSqlSessionTemp
         }
         return template;
     }
-
 
     @Override
     public <T> T selectOne(String statement, Object parameter) {
@@ -117,6 +115,14 @@ public class MyBatisSqlSessionTemplate extends AbstractUnsupportedSqlSessionTemp
         return findStrategyTemplate(parameter).delete(statement, parameter);
     }
 
+    public ShardStrategy getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(ShardStrategy strategy) {
+        this.strategy = strategy;
+    }
+
     public Map<String, DataSource> getShards() {
         return shards;
     }
@@ -139,5 +145,13 @@ public class MyBatisSqlSessionTemplate extends AbstractUnsupportedSqlSessionTemp
 
     public void setConfigLocation(String configLocation) {
         this.configLocations = new String[]{configLocation};
+    }
+
+    public Map<String, SqlSessionTemplate> getSqlSessionTemplates() {
+        return sqlSessionTemplates;
+    }
+
+    public void setSqlSessionTemplates(Map<String, SqlSessionTemplate> sqlSessionTemplates) {
+        this.sqlSessionTemplates = sqlSessionTemplates;
     }
 }

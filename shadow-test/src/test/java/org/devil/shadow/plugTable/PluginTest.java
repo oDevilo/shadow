@@ -52,7 +52,7 @@ public class PluginTest {
         UserModel user = new UserModel();
         user.setId(1L);
         user.setName("this is ");
-        List<UserModel> u = session.selectList("com.devil.shadow.model.UserMapper.selectByPrimaryKey", user);
+        List<UserModel> u = session.selectList("org.devil.shadow.model.UserMapper.selectByPrimaryKey", user);
         System.out.println(u);
 
 
