@@ -10,6 +10,8 @@ import org.devil.shadow.exception.ShadowSpringException;
 import org.devil.shadow.strategy.ShardStrategy;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import javax.sql.DataSource;
 import java.util.*;
@@ -49,7 +51,9 @@ public class MyBatisSqlSessionTemplate extends AbstractUnsupportedSqlSessionTemp
             throw new ShadowSpringException("create strategy error!", e);
         }
 
-        log.debug("MyBatisSqlSessionTemplate afterPropertiesSet");
+        if (CollectionUtils.isEmpty(sqlSessionTemplates)) {
+            throw new ShadowSpringException("no shards or sqlSessionTemplates");
+        }
     }
 
     /**

@@ -17,9 +17,7 @@ public class TableShadowConfigParser {
         xstream.addImplicitArray(TableShadowConfig.class, "tableStrategys");
         TableShadowConfig tableShadow = (TableShadowConfig) xstream.fromXML(input);
         for (TableStrategyConfig strategyConfig : tableShadow.getTableStrategys()) {
-            Class<?> clazz = Class.forName(strategyConfig.getStrategyClass());
-            TableStrategy strategy = (TableStrategy) clazz.newInstance();
-            TabelStrategyConfigHolder.register(strategyConfig.getName(), strategy);
+            TabelStrategyConfigHolder.register(strategyConfig);
         }
     }
 }

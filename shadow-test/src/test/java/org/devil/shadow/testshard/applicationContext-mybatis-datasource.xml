@@ -39,4 +39,6 @@
         <property name="configLocation" value="classpath*:org/devil/shadow/testShard/mybatis-config.xml"/>
     </bean>
 
+    <!-- 事务配置 -->
+
 </beans>

@@ -13,10 +13,4 @@ public class TagConstants {
         DOC_TYPE_MAP.put("-//shadow.devil.com//DTD tableShadow 2.0//EN", TABLE_ROUTER_CONFIG_DTD);
     }
 
-    public interface TableStrategyTag {
-        String NAME = "name";
-        String TABLES = "tables";
-        String STRATEGY_CLASS = "strategyClass";
-    }
-
 }

@@ -16,8 +16,16 @@ public class TabelStrategyConfigHolder {
     private static Map<String, List<String>> strategyTables = new HashMap<String, List<String>>();
     private static Map<String, TableStrategy> tableStrategyRouter = new HashMap<String, TableStrategy>();
 
-    public static void register(String name, TableStrategy strategy) {
-        strategyRegister.put(name, strategy);
+    public static void register(TableStrategyConfig strategyConfig) throws Exception {
+        if (existTableStrategy(strategyConfig.getName())) {
+            throw new ShadowPluginException("already exist table STRATEGY: " + strategyConfig.getName());
+        }
+
+        Class<?> clazz = Class.forName(strategyConfig.getStrategyClass());
+        TableStrategy strategy = (TableStrategy) clazz.newInstance();
+        strategyRegister.put(strategyConfig.getName(), strategy);
+        addTables(strategyConfig.getName(), strategyConfig.getTables());
+
     }
 
     public static boolean existTableStrategy(String name) {
