@@ -40,4 +40,7 @@
       <foreach item="item" collection="list" open="id in (" separator="," close=")">#{item}</foreach>
     </where>
   </select>
+  <update id="UPDATE_BY_ID" parameterType="java.lang.Long">
+    UPDATE test SET name = "do" WHERE id =#{id}
+  </update>
 </mapper>

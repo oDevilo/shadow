@@ -42,7 +42,7 @@ public class MyBatisSqlSessionDaoSupport extends DaoSupport {
      * @return
      */
     private Map<String, Collection<?>> classify(Collection<?> entities) {
-        Map<String, Collection<?>> shardEntityMap = new HashMap<String, Collection<?>>();
+        Map<String, Collection<?>> shardEntityMap = new HashMap<>();
         for (Object entity : entities) {
             String shardName = strategy.convertDbServer(entity);
             Collection shardEntities = shardEntityMap.get(shardName);
@@ -50,7 +50,7 @@ public class MyBatisSqlSessionDaoSupport extends DaoSupport {
                 if (sqlSessionTemplates.get(shardName) == null) {
                     throw new ShadowSpringException("find no match template");
                 }
-                shardEntities = new ArrayList<Object>();
+                shardEntities = new ArrayList<>();
                 shardEntityMap.put(shardName, shardEntities);
             }
             shardEntities.add(entity);
@@ -91,7 +91,7 @@ public class MyBatisSqlSessionDaoSupport extends DaoSupport {
 
     public <E> List<E> selectList(String statement, Collection<?> parameter) {
         Map<String, Collection<?>> classifyMap = classify(parameter);
-        List result = new ArrayList<Object>();
+        List result = new ArrayList<>();
         for (String shardName : classifyMap.keySet()) {
             SqlSessionTemplate template = sqlSessionTemplates.get(shardName);
             result.addAll(template.selectList(statement, classifyMap.get(shardName)));

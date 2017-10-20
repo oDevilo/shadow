@@ -11,4 +11,5 @@ public interface TestDao {
     TestModel selectById(Long id);
     int batchInsert(List<TestModel> list);
     List<TestModel> selectListShards(List<Long> ids);
+    int update(Long id);
 }

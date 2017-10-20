@@ -16,8 +16,8 @@ public class TestDaoImpl extends MyBatisSqlSessionDaoSupport implements TestDao 
     @Override
     public TestModel selectById(Long id) {
         Map<String, Object> param = new HashMap<>();
-        param.put("id", id)
-;        return getSqlSession().selectOne("org.devil.shadow.model.TestMapper.selectByPrimaryKey", param);
+        param.put("id", id);
+        return getSqlSession().selectOne("org.devil.shadow.model.TestMapper.selectByPrimaryKey", param);
     }
 
     @Override
@@ -28,6 +28,13 @@ public class TestDaoImpl extends MyBatisSqlSessionDaoSupport implements TestDao 
     @Override
     public List<TestModel> selectListShards(List<Long> ids) {
         return selectList("org.devil.shadow.model.TestMapper.SELECT_BY_IDS", ids);
+    }
+
+    @Override
+    public int update(Long id) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("id", id);
+        return getSqlSession().update("org.devil.shadow.model.TestMapper.UPDATE_BY_ID", param);
     }
 
 }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-4.0.xsd
     http://www.springframework.org/schema/beans
@@ -16,16 +18,16 @@
 
     <context:component-scan base-package="org.devil.shadow" />
 
-    <bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="url" value="${jdbc.url.db1}"/>
-        <property name="username" value="${jdbc.username.db1}"/>
-        <property name="password" value="${jdbc.password.db1}"/>
-    </bean>
-
     <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="${jdbc.url.db2}"/>
         <property name="username" value="${jdbc.username.db2}"/>
         <property name="password" value="${jdbc.password.db2}"/>
+    </bean>
+
+    <bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc.url.db1}"/>
+        <property name="username" value="${jdbc.username.db1}"/>
+        <property name="password" value="${jdbc.password.db1}"/>
     </bean>
 
     <bean id="shardSqlSessionTemplate" class="org.devil.shadow.support.MyBatisSqlSessionTemplate">
@@ -40,5 +42,13 @@
     </bean>
 
     <!-- 事务配置 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource1" />
+    </bean>
+    <bean id="transactionManager2" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource2" />
+    </bean>
 
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager2"/>
 </beans>
