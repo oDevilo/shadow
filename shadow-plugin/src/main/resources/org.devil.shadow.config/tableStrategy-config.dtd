@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!ELEMENT tableShadow (tableStrategy*)>
-<!ELEMENT tableStrategy (name,tables,strategyClass)>
-<!ELEMENT name (#PCDATA)>
+<!ELEMENT tableStrategy (tables+)>
+<!ATTLIST tableStrategy name CDATA #REQUIRED strategyClass CDATA #REQUIRED>
 <!ELEMENT tables (#PCDATA)>
-<!ELEMENT strategyClass (#PCDATA)>
