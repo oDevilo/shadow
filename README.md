@@ -9,6 +9,39 @@
  4. 目前传参用map，要考虑model，还有基本类型
  5. mybatis-config.xml配置的位置
 
+route 接口,用于分库
+
+实现方案：读写分离，db还是在mybatis-config配置
+shadowconfig配置文件如下
+
+1.<dbStrategy>一个类，配置db的分库策略，配置db的list
+2.<tableStrategy>多个表的分表策略，配置对应的table的list
+
+库需要有group，相同group中的建表ddl相同
+如果group中增加新的dbserver，
+那么必须要保证之前的数据路由是到之前的数据库
+
+
+db的配置还是在mybatis-config
+获取db的id来进行router分配
+
+分表：
+1.间隔，如1-100到table1，200-300到table2
+2.字段hash取余数
+3.时间
+
+分库：
+1.路由库（多一次查询）
+2.直接操作，但是在之后扩展的时候，需要进行数据迁移
+（个人感觉基于mybatis插件的方式做分库不太现实,要在mybatis外面重新套）
+
+现有两种分库方式
+1.与分表一样，通过hash等，在方法中实现，缺点是如果增加库，则需要进行数据迁移
+
+2.增加router库，每次先去此库查询对应的库，再去对应库获取数据。优点：增加库后，不需要进行数据迁移。缺点：每次数据库查询，需要查两次。可以通过redis等缓存进行优化
+
+3.事务，先做成所有回滚的形式
+
 # ShadowPlugin
 
 插件的方式，进行分表，配置简单，自定义分表路由，十分灵活
